@@ -29,6 +29,11 @@ alias ga='git add'
 alias gs='git status'
 alias gcm="git commit -m"
 ```
+###### useful settings for `~/.vimrc`
+```shell
+# add spell checking and automatic wrapping at recommended 72 columns
+autocmd Filetype gitcommit setlocal spell textwidth=72
+```
 
 ## .gitignore
 
@@ -105,15 +110,33 @@ Thumbs.db
 + troubleshoot connection problems, see where packets go `traceroute yahoo.com` if traceroute fails on certain hops but continues going, the individual server may not support icmp protocol, which is used by ping and traceroute
 + Traceroute with stats over time `mtr google.com`
 
+##### Using Zgrep
+```shell
+
+# example of searching gzipped log files:
+
+find . -iname '*other_vhosts_access*\.gz' | xargs -I{} zgrep 'string' "{}" | less
+
+# show unified diff in log:
+git log -p -- file.name
+
+# commit chunks:
+git commit -p -- file.name
+
+# git show a commit with unified diff:
+git show commit -- file.name
+
+```
 
 ##### Firewalls
 
 (still adding)
 
 ##### Using Rsync
-1. From remote to local, dry run first: `rsync -vacn username@remote_host:destination_directory ~/dir1`
+1. From remote to local, dry run first: 
+```shell
+rsync -vacn username@remote_host:destination_directory ~/dir1
+```
 2. If this looks good, then remove -n flag and run again
 
 ***
-
-
