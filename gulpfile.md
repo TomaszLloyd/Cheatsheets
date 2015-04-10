@@ -77,7 +77,8 @@ Since no two projects are the same, this gulpfile moves all the directory variab
 
 This gulpfile is part of the open source Fabric project which you can [follow here](https://github.com/flickerbox/fabric)
 
-##### The actual Gulpfile
+##### The full resulting Gulpfile
+Note, I added more variables for the directory structure to make it easily suit the needs of any site
 
 ``` javascript
 // very important to put /*# sourceMappingURL=master.css.map */ as the first line of the master.scss
