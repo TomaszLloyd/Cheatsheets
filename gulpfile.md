@@ -9,6 +9,61 @@ When using SASS, this gulpfile will do all of the following:
 Make sure you have the Chrome plugin installed and enabled, which you can find here
 [LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
+I came across some issues trying to get autoprefixing, compression, sourcemaps that work in the Chrome inspector, and livereload of the CSS without reloading the whole page. I saw others were having similar problems so I figured I would document it here.
+
+This is the simplest example:
+``` javascript
+'use strict';
+
+var gulp = 			require('gulp'),
+	sass = 			require('gulp-ruby-sass'),
+	autoprefixer = 	require('gulp-autoprefixer'),
+	concat = 		require('gulp-concat'),
+	sourcemaps = 	require('gulp-sourcemaps'),
+	livereload = 	require('gulp-livereload');
+
+// set directory locations
+var srcDir = 			'_src/styles',
+	cssDestination = 	'_css';
+
+// Styles Task which we'll call when there's a change in one of our SASS files
+// This compiles SASS to CSS, adds autoprefixing, writes to a sourcemap, and compiles to a master.css file
+gulp.task('styles', function() {
+	return sass (
+		srcDir + '/', {
+			sourcemap: true,
+			style: 'compressed'
+		}
+	)
+	.pipe(concat('master.css'))
+	.pipe(autoprefixer())
+	.pipe(sourcemaps.write('../' + cssDestination +'/',{ 
+		sourceRoot: srcDir,
+		includeContent: false  		// default is true, which includes the entire css in the sourcemap
+	}))
+	.pipe(gulp.dest(cssDestination));
+});
+
+gulp.task('watch', function () {
+	// when any SASS file changes, run the Styles task
+	gulp.watch(srcDir + '/*.scss', ['styles']);
+
+	// start listener for livereload function
+	livereload.listen();
+	
+	// watch for changes only in our master.css file
+	// this is separate from the 'styles' task since we want to make sure we run it synchronously
+	gulp.watch( cssDestination + '/master.css', function(event) {
+		// only reload the resource that has changed, in this case, our master.css file. this allows livereload without a page refresh
+		livereload.changed(event.path); 
+	});
+
+});
+
+// add both of our tasks to our default task which starts them both
+gulp.task('default', ['styles', 'watch']);
+```
+
 ##### Processing images
 To process images, run `gulp images` when you're ready as it will not process them by default
 
@@ -19,8 +74,6 @@ Since processing images with gulp:
 + you can still process images when you want to by running `gulp images`
 
 Since no two projects are the same, this gulpfile moves all the directory variables out of the code to make it easier to set up your own project.
-
-As a side note, it took a few hours to get everything to place nicely to get autoprefixing, compression, sourcemaps that work in the Chrome inspector, and livereload of the CSS without reloading the whole page.
 
 This gulpfile is part of the open source Fabric project which you can [follow here](https://github.com/flickerbox/fabric)
 
