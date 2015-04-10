@@ -7,7 +7,7 @@ When using SASS, this gulpfile will do all of the following:
 
 ##### LiveReload note
 Make sure you have the Chrome plugin installed and enabled, which you can find here
-`https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei`
+[LiveReload](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
 
 ##### Processing images
 To process images, run `gulp images` when you're ready as it will not process them by default
@@ -22,14 +22,13 @@ Since no two projects are the same, this gulpfile moves all the directory variab
 
 As a side note, it took a few hours to get everything to place nicely to get autoprefixing, compression, sourcemaps that work in the Chrome inspector, and livereload of the CSS without reloading the whole page.
 
+This gulpfile is part of the open source Fabric project which you can [follow here](https://github.com/flickerbox/fabric)
+
 ##### The actual Gulpfile
 
 ``` javascript
 // very important to put /*# sourceMappingURL=master.css.map */ as the first line of the master.scss
-//
-// If you want live reload to work, you must install the livereload extension for chrome
-// https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
-//
+
 'use strict';
 
 var gulp = 			require('gulp'),
@@ -156,4 +155,4 @@ gulp.task('default', ['scripts', 'styles', 'watch']);
 }
 ```
 
-If you're interested in keeping up to date with this project, you can follow it here `https://github.com/flickerbox/fabric`
+If you're interested in keeping up to date with this project, you can [follow it here](https://github.com/flickerbox/fabric)
