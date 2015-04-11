@@ -102,11 +102,16 @@ which.min(x) 				# returns the index of the smallest element of x
 rev(x) 						# reverses the elements of x
 sort(x) 					# sorts the elements of x in increasing order; 
 rev(sort(x))				# to sort in decreasing order
-cut(x,breaks) 				# divides x into intervals (factors); breaks is the number of cut intervals or a vector of cut points
-match(x, y) 				# returns a vector of the same length than x with the elements of x which are in y (NA otherwise)
-which(x == a) 				# returns a vector of the indices of x if the comparison operation is true (TRUE), in this example the values of i for which x[i] == a (the argument of this function must be a variable of mode logical)
+cut(x,breaks) 				# divides x into intervals (factors); breaks is the number of cut intervals 
+							# or a vector of cut points
+match(x, y) 				# returns a vector of the same length than x with the elements of x 
+							#which are in y (NA otherwise)
+which(x == a) 				# returns a vector of the indices of x if the comparison operation 
+							# is true (TRUE), in this example the values of i for which x[i] == a 
+							# (the argument of this function must be a variable of mode logical)
 choose(n, k) 				# computes the combinations of k events among n repetitions = n!/[(n−k)!k!]
-na.omit(x) 					# suppresses the observations with missing data (NA) (suppresses the corresponding line if x is a matrix or a data frame)
+na.omit(x) 					# suppresses the observations with missing data (NA) (suppresses the
+							# corresponding line if x is a matrix or a data frame)
 na.fail(x) 					# returns an error message if x contains at least one NA
 ```
 
