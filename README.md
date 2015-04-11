@@ -1,5 +1,5 @@
 # Cheatsheets
-A collection of code snippets, language cheatsheets, and development course notes updatedas often as I can.
+A collection of code snippets, language cheatsheets, and development course notes updated as often as I can.
 
 ##### General Development Environment snippets and configurations
 [General Dev Environment](https://github.com/TomaszFoster/Cheatsheets/blob/master/cheatsheet.md)
