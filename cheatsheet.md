@@ -139,4 +139,47 @@ rsync -vacn username@remote_host:destination_directory ~/dir1
 ```
 2. If this looks good, then remove -n flag and run again
 
-***
+##### Git commands
+```shell
+# unstash changes
+git stash pop
+
+# show all stashed changelists
+git stash list
+
+# discard last stashed changeset
+git stash drop
+
+# show difference between staged changes and last file version
+git diff --staged
+
+# unstage file but preserve it's contents
+git reset [file]
+
+# remove file from version control but preserve locally
+git rm --cached [file]
+```
+
+##### Move from SVN to Git and keep history
+``` shell
+svn st && svn st -u
+# make sure to commit any outstanding work
+
+git svn clone http://svnRepoLocation.com/trunk/ --no-metadata --no-minimize-url --authors-file=authors-file-generic.txt com.gitRepoName.git/
+
+# run both of these as a quick sanity check to make sure number of commits is equal
+svn log -q http://svnRepoLocation.com/trunk/ | grep ^r | wc -l
+git log -q | grep ^commit | wc -l
+
+cd com.gitRepoName.git/
+git remote add origin git@github.com:USERNAME/com.gitRepoName.git # or wherever your repo is going to be
+git push -u origin --all
+git push -u origin --tags
+
+# add new branches i.e. staging, beta, master
+git checkout master && git create-branch staging
+```
+Then check ownership of project folder.
+Create new vhosts for stage and beta branches if applicable
+Enable vhosts
+Make SVN repo read-only to prevent further changes and have a snapshot
