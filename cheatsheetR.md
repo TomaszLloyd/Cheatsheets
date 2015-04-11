@@ -113,6 +113,7 @@ choose(n, k) 				# computes the combinations of k events among n repetitions = n
 na.omit(x) 					# suppresses the observations with missing data (NA) (suppresses the
 							# corresponding line if x is a matrix or a data frame)
 na.fail(x) 					# returns an error message if x contains at least one NA
+
 ```
 
 ##### Download a file
