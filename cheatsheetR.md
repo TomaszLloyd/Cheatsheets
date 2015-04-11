@@ -113,8 +113,20 @@ choose(n, k) 				# computes the combinations of k events among n repetitions = n
 na.omit(x) 					# suppresses the observations with missing data (NA) (suppresses the
 							# corresponding line if x is a matrix or a data frame)
 na.fail(x) 					# returns an error message if x contains at least one NA
-
+unique(x) 					# if x is a vector or a data frame, returns a similar object but with
+							# the duplicate elements suppressed
+table(x) 					# returns a table with the numbers of the differents values of x
+							# (typically for integers or factors)
+subset(x, ...) 				# returns a selection of x with respect to criteria (...,
+							# typically comparisons: x$V1 < 10); if x is a data frame, the option
+							# select gives the variables to be kept or dropped using a minus sign
+sample(x, size) 			# resample randomly and without replacement size elements
+							# in the vector x, the option replace = TRUE allows to resample
+							# with replacement
+prop.table(x,margin=) 		# table entries as fraction of marginal table
 ```
+
+### Class Notes Begin Here
 
 ##### Download a file
 ``` r
