@@ -1,5 +1,5 @@
 
-### Class Notes Begin Here
+### Week 1
 
 ##### Download a file
 ``` r
@@ -147,3 +147,201 @@ merge(DT1, DT2)
 ```
 Reading a data.table is much faster than reading a data.frame. It's faster and more efficient but requires
 more care in use, however you can do more with data.frames
+
+### Week 2
+
+##### Connecting to MySQL
+```r
+# install RMySQL package
+install.packages("RMySQL")
+
+# connect to a database - example is ucsc database
+ucscDb <- dbConnect(MySQL(),user="genome", host="genome-mysql.cse.ucsc.edu")
+
+result <- dbGetQuery(ucscDb,"show databases;"); 
+
+# you need to remember to disconnect from the database
+dbDisconnect(ucscDb);
+
+# printing result here will show a list of all databases
+result
+
+# connect to hg19 database and list tables
+hg19 <- dbConnect(MySQL(),user="genome", db="hg19", host="genome-mysql.cse.ucsc.edu")
+
+# dbListTables is pretty self explanatory
+allTables <- dbListTables(hg19)
+
+length(allTables)
+
+allTables[1:5]
+
+# get dimensions of a specific table
+dbListFields(hg19,"affyU133Plus2")
+
+dbGetQuery(hg19, "select count(*) from affyU133Plus2")
+
+# Read from the table
+affyData <- dbReadTable(hg19, "affyU133Plus2")
+
+head(affyData)
+
+# select a specific subset
+query <- dbSendQuery(hg19, "select * from affyU133Plus2 where misMatches between 1 and 3")
+
+affyMis <- fetch(query); quantile(affyMis$misMatches)
+
+affyMisSmall <- fetch(query,n=10); dbClearResult(query);
+
+dim(affyMisSmall)
+
+# don't forget to close the connetion !
+
+dbDisconnect(hg19)
+```
+
+##### Reading HDF5
++ Used for large data sets
++ Supports storing a range of data types
++ Heirarchical data format
++ `groups` - containing zero or more data sets and metadata
+++ have a group header with group name and list of attributes
+++ have a group symbol table with a list of objects in group
++ `datasets` - multidimensional array of data elements with metadata
+++ have a header with name, datatype, dataspace, and storage layout
+++ have a data array with the data
+
+###### R HDF5 Package
+```r
+source("http://bioconductor.org/biocLite.R")
+biocLite("rhdf5")
+
+# this installs packages from Bioconductor which is primarily used for genomics but also has
+# good Big Data packages
+library(rhdf5)
+created = h5createFile("example.h5")
+created
+```
+##### Create groups
+```r
+created = h5createGroup("example.h5","foo")
+created = h5createGroup("example.h5","baa")
+created = h5createGroup("example.h5","foo/foobaa")
+h5ls("example.h5")
+```
+##### Write to groups
+```r
+A = matrix(1:10, nr=5, nc=2)
+h5write(A, "example.h5", "foo/A")
+B = array(seq(0.1,2.0, by=0.1), dim=c(5,2,2))
+attr(B, "scale") <- "liter"
+h5write(B, "example.h5","foo/foobaa/B")
+h5ls("example.h5)")
+```
+
+##### Write a data set
+```r
+df = data.frame(1L:5L,seq(0,1,length.out=5),c("ab","cde","fghi","a","s"), stringsAsFactors=FALSE)
+h5write(df,"example.h5","df")
+h5ls("example.h5")
+```
+
+##### Reading data
+```r
+readA = h5read("exmaple.h5","foo/A")
+readB = h5read("exmaple.h5","foo/foobaa/B")
+readdf = h5read("exmaple.h5","df")
+readA
+```
+##### Writing and reading chunks
+```r
+h5write(c(12,13,14),"example.h5","foo/A",index=list(1:3,1))
+h5read("example.h5","foo/A")
+```
+#### Reading data from the Web
+##### Webscraping
++ can be a great way to get data
++ many websites have information you may want to programatically read
++ in some cases this is against their TOS
++ attempting to read too many pages too quickly can get your IP blocked (lol)
+
+##### Getting data off webpages - readLines()
+```r
+con = url("http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en")
+htmlCode = readLines(con)
+close(cone)
+htmlCode
+
+##### Reading data from APIs
+Create an application, say on twitter
+###### Accessing Twitter from R
+```r
+myapp = oauth_app("twitter",
+	key="yourConsumerKeyHere",
+	secret="youConsumerSecret")
+
+sig = sign_oath1.0(myapp,
+	token = "yourTokenHere",
+	token_secret = "youTokenSecretHere")
+
+homeTL = GET("https://api.twitter.com/1.1/statuses/home_timeline.json", sig)
+```
+##### Converting JSON objects
+```r
+json1 = content(homeTL)
+json2 = jsonlite::fromJSON(toJSON(json1))
+json2[1,1:4]
+```
+###### Just read the documentation dummy!
++ httr allows `GET`,`POST`,`PUT`,`DELETE` requests if you're authorized
++ you can authenticate with a user name or password
++ most modern APIs use something like oauth
++ httr works well with Facebook, Google, Twitter, Github, etc
+
+##### Reading from other sources
+Theres probably a package for it.
++ Easy way to find if an R package exists is to google `data storage mechanism R package`
++ for example `MySQL R Package`
+
+##### Interacting more directly with files
+```r
+file 			# open a connection to a text file
+url 			# open a connection to a url
+gzfile			# open a connection to a .gz file
+bzfile			# open connections to .bz2 file
+?connections 	# for more information
+
+## REMEMBER TO CLOSE CONNECTIONS!! ##
+```
+##### foreign package
++ loads data from Minitab, S, SAS, SPSS, Stata, Systat
++ Basic functions `read.foo`
+```r
+read.arff 		# Weka
+read.dta 		# Stata
+read.mtp 		# Minitab
+read.octave 	# Octave
+read.spss 		# SPSS
+read.xport 		# SAS
+```
+
+##### Examples of other db packages
++ RPostresSQL provides DBI-compliant database connection from R
++ RODBC provides interfaces to multiple databases including PostgreQL, MySQL, Microsoft Access and SQLite.
++ RMongo and rmongodb provide access to, you guessed it, MongoDB
+
+##### Reading images
++[jpeg](http://cran.r-project.org/web/packages/jpeg/index.html)
++[readbitmap](http://cran.r-project.org/web/packages/readbitmap/index.html)
++[png](http://cran.r-project.org/web/packages/png/index.html)
++[EBImage (Bioconductor)](http://www.bioconductor.org/packages/2.13/bioc/html/EBImage.html)
+
+##### Reading GIS data
++[rdgal](http://cran.r-project.org/web/packages/rgdal/index.html)
++[rgeos](http://cran.r-project.org/web/packages/rgeos/index.html)
++[raster](http://cran.r-project.org/web/packages/raster/index.html)
+
+##### Reading Music Data
++[tuneR](http://cran.r-project.org/web/packages/tuneR/)
++[seewave](http://rug.mnhn.fr/seewave/)
+
