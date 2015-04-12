@@ -205,11 +205,11 @@ dbDisconnect(hg19)
 + Supports storing a range of data types
 + Heirarchical data format
 + `groups` - containing zero or more data sets and metadata
-++ have a group header with group name and list of attributes
-++ have a group symbol table with a list of objects in group
+ + have a group header with group name and list of attributes
+ + have a group symbol table with a list of objects in group
 + `datasets` - multidimensional array of data elements with metadata
-++ have a header with name, datatype, dataspace, and storage layout
-++ have a data array with the data
+ + have a header with name, datatype, dataspace, and storage layout
+ + have a data array with the data
 
 ###### R HDF5 Package
 ```r
@@ -331,17 +331,25 @@ read.xport 		# SAS
 + RMongo and rmongodb provide access to, you guessed it, MongoDB
 
 ##### Reading images
-+[jpeg](http://cran.r-project.org/web/packages/jpeg/index.html)
-+[readbitmap](http://cran.r-project.org/web/packages/readbitmap/index.html)
-+[png](http://cran.r-project.org/web/packages/png/index.html)
-+[EBImage (Bioconductor)](http://www.bioconductor.org/packages/2.13/bioc/html/EBImage.html)
++ [jpeg](http://cran.r-project.org/web/packages/jpeg/index.html)
++ [readbitmap](http://cran.r-project.org/web/packages/readbitmap/index.html)
++ [png](http://cran.r-project.org/web/packages/png/index.html)
++ [EBImage (Bioconductor)](http://www.bioconductor.org/packages/2.13/bioc/html/EBImage.html)
 
 ##### Reading GIS data
-+[rdgal](http://cran.r-project.org/web/packages/rgdal/index.html)
-+[rgeos](http://cran.r-project.org/web/packages/rgeos/index.html)
-+[raster](http://cran.r-project.org/web/packages/raster/index.html)
++ [rdgal](http://cran.r-project.org/web/packages/rgdal/index.html)
++ [rgeos](http://cran.r-project.org/web/packages/rgeos/index.html)
++ [raster](http://cran.r-project.org/web/packages/raster/index.html)
 
 ##### Reading Music Data
-+[tuneR](http://cran.r-project.org/web/packages/tuneR/)
-+[seewave](http://rug.mnhn.fr/seewave/)
++ [tuneR](http://cran.r-project.org/web/packages/tuneR/)
++ [seewave](http://rug.mnhn.fr/seewave/)
+
+##### Cool Hack for Fixed Width Files
+```r
+# paste a ruler into console
+cat(">",paste0(rep(c(1:9,"+"),6),collapse=""))
+
+# or just open in sublime text ;)
+```
 
