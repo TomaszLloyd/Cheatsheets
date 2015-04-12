@@ -358,3 +358,48 @@ title(main = "Old Faithful Geyser data") ## Add a main title
 dev.copy(png, file = "geyserplot.png") ## Copy my plot to a PNG file
 dev.off() ## Don't forget to close the PNG device!
 ```
+
+##### Course Project 1
+```r
+# plot1.R
+dat <- read.table('household_power_consumption.txt',sep=";",nrows=-1, header=TRUE, na.strings="?")
+DT <- subset(dat, as.Date(Date, "%d/%m/%Y") %in% as.Date("01/02/2007", "%d/%m/%Y"):as.Date("02/02/2007", "%d/%m/%Y") )
+hist( DT$Global_active_power, col="red", xlab="Global Active Power (killowatts)", ylab="Frequency",main="Global Active Power")
+dev.copy(png, file="plot1.png", height=480, width=480)
+dev.off()
+
+# plot2.R
+dat <- read.table('household_power_consumption.txt',sep=";",nrows=-1, header=TRUE, na.strings="?")
+DT <- subset(dat, as.Date(Date, "%d/%m/%Y") %in% as.Date("01/02/2007", "%d/%m/%Y"):as.Date("02/02/2007", "%d/%m/%Y") )
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Global_active_power, type="l", xlab="", ylab="Global Active Power (killowatts)")
+dev.copy(png, file="plot2.png", height=480, width=480)
+dev.off()
+
+#plot3.R
+dat <- read.table('household_power_consumption.txt',sep=";",nrows=-1, header=TRUE, na.strings="?")
+DT <- subset(dat, as.Date(Date, "%d/%m/%Y") %in% as.Date("01/02/2007", "%d/%m/%Y"):as.Date("02/02/2007", "%d/%m/%Y") )
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_1, type="l", xlab="", ylab="Energy sub metering")
+lines(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_2, type="l",col="red")
+lines(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_3, type="l",col="blue")
+legend("topright",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), col=c("black","red","blue"), lwd=c(2,2))
+dev.copy(png, file="plot3.png", height=480, width=480)
+dev.off()
+
+#plo4.R
+dat <- read.table('household_power_consumption.txt',sep=";",nrows=-1, header=TRUE, na.strings="?")
+DT <- subset(dat, as.Date(Date, "%d/%m/%Y") %in% as.Date("01/02/2007", "%d/%m/%Y"):as.Date("02/02/2007", "%d/%m/%Y") )
+par(mfrow = c(2, 2)) # set up 2 x 2 plot area
+# first plot is from plot2
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Global_active_power, type="l", xlab="", ylab="Global Active Power")
+# second plot is
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Voltage, type="l", xlab="datetime", ylab="Voltage")
+# third plot is from plot3
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_1, type="l", xlab="", ylab="Energy sub metering")
+lines(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_2, type="l",col="red")
+lines(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Sub_metering_3, type="l",col="blue")
+legend("topright",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), col=c("black","red","blue"), lwd=c(2,2), bty="n")
+# last plot is same as first, but with global reactive power
+plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M:%S" ), DT$Global_reactive_power, type="l", xlab="datetime", ylab="Global_reactive_power")
+dev.copy(png, file="plot4.png", height=480, width=480)
+dev.off()
+```
