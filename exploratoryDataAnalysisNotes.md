@@ -1,3 +1,5 @@
+## Exploratory Data Analysis - Notes
+
 ##### Principles of Analytic Graphics
 + Principle 1 - Show Comparisons
  + evidence for a hypothesis is always relative to another competing hypothesis
