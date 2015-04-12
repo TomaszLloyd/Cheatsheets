@@ -269,7 +269,7 @@ h5read("example.h5","foo/A")
 ```r
 con = url("http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en")
 htmlCode = readLines(con)
-close(cone)
+close(con)
 htmlCode
 
 ##### Reading data from APIs
