@@ -10,3 +10,8 @@ A collection of code snippets, language cheatsheets, and development course note
 ##### R shortcuts and course notes from Data Science specialization through Coursera & John Hopkins
 [R Lang](https://github.com/TomaszFoster/Cheatsheets/blob/master/cheatsheetR.md)
 
+##### Getting and Cleaning Data - John Hopkins / Coursera Notes
+[Geting and Cleaning Data](https://github.com/TomaszFoster/Cheatsheets/blob/master/exploratoryDataAnalysisNotes.md)
+
+##### Exploratory Data Analysis - John Hopkins / Coursera Notes
+[Exploratory Data Analysis](https://github.com/TomaszFoster/Cheatsheets/blob/master/gettingAndCleaningDataNotes.md)
