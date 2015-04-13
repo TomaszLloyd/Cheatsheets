@@ -353,3 +353,141 @@ cat(">",paste0(rep(c(1:9,"+"),6),collapse=""))
 # or just open in sublime text ;)
 ```
 
+### Week 3
+
+##### Subsetting and Sorting
+###### Quick Review
+```r
+set.seed(13435) # sets the random seed generator, used to be able to replicate data
+X <- data.fram("varl1"=sample(1:5), "var2"=sample(6:10), "var3"=sample(11:15))
+X <- X[sample(1:5),]
+X$var2[c(1,3)] = NA
+```
+##### Logicals ands and ors
+```r
+X[ (X$var1 <= 3 & X$var3 > 11), ]
+
+X[(X$var1 <= 3 | X$var3 > 15), ]
+
+# dealing with missing values
+X[which(X$var2 > 8), ]
+```
+##### Sorting
+```r
+sort(X$var1)
+
+sort(X$var1, decreasing=TRUE)
+
+sort(X$var2, na.last=TRUE)
+```
+##### Ordering
+```r
+X[order(X$var1),]
+
+X[order(X$var1, X$var3), ]
+```
+##### Ordering with plyr
+```r
+library(plyr)
+arrange(X,var1)
+
+arrange(X,desc(var1))
+```
+##### Adding rows and columns
+```r
+X$var4 <- rnorm(5)
+
+Y <- cbind(X,rnorm(5))
+Y
+```
+##### Summarizing Data
+###### Getting data from the web
+```r
+if(!file.exists("./data")){dir.create("./data")}
+fileUrl <- "https://data.baltimorecity.gov/api/views/k5ry-er3g/rows.csv?accessType=DOWNLOAD"
+download.file( fileUrl, destfile="./data/restaurants.csv", method="curl")
+restData <- read.csv("./data/restaurants.csv")
+```
+##### Look at a bit of data
+```r
+head(restData, n=3) # look at first 3 rows of restData plus header info
+
+tail(restData, n=3) # look at last 3 rows of restData plus header info
+```
+##### Make summary
+```r
+summary(restData)
+# gives an indepth summary of this dataset
+
+str(restData) # even more indepth information
+```
+##### Quantiles of quantitative variables
+```r
+# shows 0, 25, 50, 75, and 100%
+quantile( restData$councilDistrict, na.rm=TRUE )
+
+# shows 50, 75, 80 %
+quantile( restData$councilDistrict, probs=c(0.5,0.75,0.9 ))
+```
+##### making a table
+```r
+table( restData$zipCode, useNA="ifany" )
+
+table( restData$councilDistrict, restData$zipCode )
+```
+##### Check for missing values
+```r
+sum( is.na( restData$councilDistrict ) )
+
+any( is.na( restData$councilDistrict ) )
+
+all( restData$zipCode > 0 )
+```
+##### Row and Column Sums
+```r
+colSums( is.na( restData ) )
+all( colSums(is.na(restData))==0 )
+```
+##### Values with specific characteristics
+```r
+# gives true or false count
+table( restData$zipCode %in% c("21212") )
+
+# gives true or false count
+table( restData$zipCode %in% c("21212", "21213") )
+
+# gives subset of results
+restData[ restData$zipCode %in% c("21212"), ]
+```
+##### Cross tabs
+```r
+data(UCBAdmissions)
+DF = as.data.fram(UCBAdmissions)
+summary(DF)
+
+# gives 2 x 2 table of genders vs admissions
+xt <- xtabs(Freq ~ Gender + Admit, data=DF )
+xt
+```
+##### Flat tables
+```r
+warpbreaks$replicate <- rep(1:9, len=54)
+xt = xtabs(breaks ~.,data=warpbreaks)
+
+ftable(xt)
+```
+##### Size of a data set
+```r
+fakeData = rnorm(1e5)
+object.size(fakeData)
+
+# output
+800040 bytes
+#
+
+print(object.size(fakeData),units="Mb")
+
+# output
+0.8mb
+#
+```
