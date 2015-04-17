@@ -595,3 +595,45 @@ table(restData2$zipGroups)
 + `log2(x), log10(x)`	other common logs
 + `exp(x)`				exponentiating x
 ```
+
+##### Reshaping data
++ Each variable forms a column
++ Each observation forms a row
++ Each table/file stores data about one kind of observation
+##### Start with reshaping
+```r
+library(reshape2)
+head(mtcars)
+
+### OUTPUT
+ mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+### END OUTPUT
+```
+##### Melting data frames
+```r
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(mtcars, id=c("carname","gear","cyl"),measure.vars=c("mpg","hp"))
+head(carMelt, n=3)
+
+### OUTPUT
+        carname gear cyl variable value
+1     Mazda RX4    4   6      mpg  21.0
+2 Mazda RX4 Wag    4   6      mpg  21.0
+3    Datsun 710    4   4      mpg  22.8
+### END OUTPUT
+
+tail(carMelt, n=3)
+
+### OUTPUT
+carname gear cyl variable value
+62  Ferrari Dino    5   6       hp   175
+63 Maserati Bora    5   8       hp   335
+64    Volvo 142E    4   4       hp   109
+### END OUTPUT
+```
