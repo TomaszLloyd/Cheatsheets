@@ -183,3 +183,13 @@ Then check ownership of project folder.
 Create new vhosts for stage and beta branches if applicable
 Enable vhosts
 Make SVN repo read-only to prevent further changes and have a snapshot
+
+##### Best Practices and Common Pitfalls
+Use protocol relative URL's when possible. What this means is not specifying the `http` or `https` and allowing the browser to do it.
+```html
+<a href="<?php echo '//' . $_server['HTTP_HOST'] . '/something/contact-thank-you' ?>">Click Me</a>
+```
+EXCEPT in cases when you're passing in a return url, like a Marketo form.
+```html
+<input type="hidden" name="returnURL" value="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/about/contact-thank-you' ?>">
+```
