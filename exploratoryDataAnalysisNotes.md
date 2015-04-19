@@ -407,3 +407,83 @@ dev.off()
 ##### Week 2
 
 ##### Lattice Plotting System
+
+The lattice plotting system is implemented wtih these packages:
++ *lattice*: contains code for producing Trellis graphics, which are independent of the "base" graphics system; includes functions like `xypot`, `bwplot`, `levelplot`
++ *grid*: implements a different graphics system independent of the "base" system; the lattice package builds on top of gri
+ + we seldom call functions from the grid package directly
++ The lattice plotting sys. doesn't have a 2-phase aspect with separate plotting and annotation like in base plotting
++ All plotting/annotation is done at once with a single function call
+
+##### Lattice Functions
++ `xyplot`: main function for creating scatterplots
++ `bwplot`: box and whiskers plots ("boxplots")
++ `histogram`: histograms
++ `stripplot`: like a boxplot but with actual points
++ `dotplot`: plot dots on "violin strings"
++ `splom`: scatterplot matrix; like `pairs` in base plotting system
++ `levelplot`,`contourplot`: for plotting "image" data
+
+Lattice functions generally take a formula for their first argument, such as:
+```r
+xyplot( y ~ x | f * g, data)
+```
++ we use the formula notation here, hence the `~`
++ on the left of the `~` is the y-axis variable, on the right is the x-axis var
++ f and g are conditioning variables - they're optional
+ + the * indicates an interaction between two variables
++ the second arg is the data frame or list from which the variables in the formula should be looked up
+ + if no data frame or list is passed, then the parent frame is used
++ if no other args are passed, there are defaults that can be used
+
+##### simple lattice plot
+```r
+library(lattice)
+library(datasets)
+
+# Ex:1 simple scatterplot
+xyplot(Ozone ~ Wind, data = airquality)
+
+# Ex: 2 Convert 'Month' to a factor variable
+airquality <- transform(airquality, Month = factor(Month))
+xyplot(Ozone ~ Wind | Month, data = airquality, layout = c(5, 1))
+```
+
+##### Lattice behavior
+Lattice f(x)s behave differently from base graphics f(x)s in one critical way
++ base graphics fx's plot data directly to the graphics device
++ lattice graphics fxs return an object of class *trellis*
++ print methods for lattic fxs actually do the work of plotting the data on the graphics device
++ lattice fxs return *plot objects* that can, in principle, be stored but it's usually better to just save the code + data
++ on the command line, trellis objects are *auto-printed* so that it appears the fx is plotting the data
+```r
+p <- xyplot(Ozone ~ Wind, data = airquality)  ## Nothing happens!
+print(p)  ## Plot appears
+
+xyplot(Ozone ~ Wind, data = airquality)  ## Auto-printing
+```
+##### Lattice Panel Functions
++ Lattice functions have a panel function which controls what happens inside each panel of the plot.
++ The lattice package comes with default panel functions, but you can supply your own if you want to customize what happens in each panel
++ Panel functions receive the x/y coordinates of the data points in their panel (along with any optional arguments)
+```r
+set.seed(10)
+x <- rnorm(100)
+f <- rep(0:1, each = 50)
+y <- x + f - f * x + rnorm(100, sd = 0.5)
+f <- factor(f, labels = c("Group 1", "Group 2"))
+xyplot(y ~ x | f, layout = c(2, 1))  ## Plot with 2 panels
+
+
+## Custom panel function
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+    panel.xyplot(x, y, ...)  ## First call the default panel function for 'xyplot'
+    panel.abline(h = median(y), lty = 2)  ## Add a horizontal line at the median
+})
+
+## Custom panel function - regression line
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+    panel.xyplot(x, y, ...)  ## First call default panel function
+    panel.lmline(x, y, col = 2)  ## Overlay a simple linear regression line
+})
+```
