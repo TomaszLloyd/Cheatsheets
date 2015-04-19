@@ -403,3 +403,7 @@ plot(strptime( paste(DT$Date, DT$Time, sep=" ", collapse=NULL ), "%d/%m/%Y %H:%M
 dev.copy(png, file="plot4.png", height=480, width=480)
 dev.off()
 ```
+
+##### Week 2
+
+##### Lattice Plotting System
