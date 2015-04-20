@@ -487,3 +487,104 @@ xyplot(y ~ x | f, panel = function(x, y, ...) {
     panel.lmline(x, y, col = 2)  ## Overlay a simple linear regression line
 })
 ```
+
+##### Plotting with ggplot2
+What is it?
++ Grammar of graphics represents an absraction of graphics ideas/objects
++ Think "verb", "noun", "adjective" for graphics
++ Allows for a "theory" of graphics on which to build new graphics and graphics objects
++ "Shorten the distance from mind to page"
+
+Grammar of Graphics
+```
+In brief, the grammar tells us that a stistical graphic is a mapping from data to aesthetic attributes (colour, shape size) of geometric objects (points, lines, bars). The plot may also contain statistical transforamtion of the data and is drawn on a specific coordinate system"
+```
+
+##### The basics: `qplot()`
++ Works much like the `plot` function in base graphics system
++ Looks for data in a data frame, similar to lattice or in parent environ.
++ Plots are made up of aesthetics (size, shape color) and geoms (points, lines)
++ Factors are important for indicating subsets of the data (if they are to have different properties); they should be *labeled*
++ The qplot() hides what goes on underneath, which is ok for most ops.
++ ggplot() is the core fx and very flexible for doing things qplot() can't
+
+Modifying aesthetics
+`qplot(displ, hwy, data = mpg, color = drv)`
+Adding a gemo
+`qplot(displ, hwy, data = mpg, geom = c("point", "smooth"))`
+Histograms
+`qplot(hwy,	data = mpg, fill = drv)`
+Facets
+`qplot(displ, hwy, data = mpg, facets = . ~ drv)`
+Histogram of eNO
+`qplot(log(eno), data = maacs)`
+Histogram by Group
+`qplot(log(eno), data = maacs, fill = mopos)`
+Density Smooth
+`qplot(log(eno),	data	=	maacs,	geom	=	"density")`
+`qplot(log(eno),	data	=	maacs,	geom	=	"density",	color	=	mopos)`
+Scatterplots: eNO vs PM2.5
+`qplot(log(pm25),	log(eno),	data	=	maacs,	color	=	mopos,	geom	=	c("point",	"smooth"),	method	=	"lm")`
+##### Summary of qplot()
++ The qplot() fx is the analog to plot() but with many built in features
++ Syntax somewhere in b/w base/lattice
++ Produces very nice graphics, essentially publication ready
++ Difficult to go against the grain/customize (don't bother; use full ggplot2 power in that case)
+##### Basic components of a ggplot2 plot
++ a data frame
++ aesthetic mappings: how data are mapped to color, size
++ geoms: geometric objects like points, lines, shapes
++ facets: for conditional plots
++ stats: statistical transformations like binning, quantiles, smoothing
++ scales: what scale an aesthetic map uses (ex: male = red, female = blue)
++ coordinate system
+
+##### Building plots with ggplot2
++ when building in ggplot2 the "artists palette" model may be the closest analogy
++ plots are built up in layers
+ + plot the data
+ + overlay a summary
+ + metadata and annotation
+
+Build up in layers
+```r
+# data frame
+head(maacs)
+
+# initial call to ggplot and aesthetics
+g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
+
+# summary of ggplot object
+summary(g)
+
+# no plot yet
+g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
+
+# explicitly save and print ggplot object
+p <-  g + geom_point()
+
+# auto print plot object without saving
+g + geom_point()
+
+# first plot with point layer
+g <- ggplot(maacs, aes(logpm25, NocturnalSympt))
+g + geom_point()
+
+# adding more layers: smooth
+g + geom_point() + geom_smooth()
+g + geom_point() + geom_smooth(method = "lm”)
+
+# adding more layers: facets
+g + geom_point() + facet_grid(. ~ bmicat) + geom_smooth(method = "lm")
+```
+
+##### Annotation
++ labels: xlab(), ylab(), labs(), ggtitle()
++ each of the "geom" functions has options to modify
++ for things that only make sense globally, use theme()
+ + example: theme(legend.positions = "none")
++ two standard appearance themes are included
+ + `theme_gray()`
+ + `theme_bw()`
+
+##### Modifying aesthetics
