@@ -139,6 +139,11 @@ rsync -vacn username@remote_host:destination_directory ~/dir1
 ```
 2. If this looks good, then remove -n flag and run again
 
+Bonus: To exclude common cvs folders/files like `.git` and `.svn`, you can use:
+```shell
+rsync -vanc --cvs-exclude
+```
+
 ##### Git commands
 ```shell
 # unstash changes
