@@ -81,30 +81,28 @@ This gulpfile is part of the open source Fabric project which you can [follow he
 Note, I added more variables for the directory structure to make it easily suit the needs of any site
 
 ``` javascript
-// very important to put /*# sourceMappingURL=master.css.map */ as the first line of the master.scss
-
+// If you want live reload to work, you must install the livereload extension for chrome
+// https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
+//
 'use strict';
 
-var gulp = 			require('gulp'),
-	uglify = 		require('gulp-uglify'),
-	sass = 			require('gulp-ruby-sass'),
-	autoprefixer = 	require('gulp-autoprefixer'),
-	plumber = 		require('gulp-plumber'),
-	notify = 		require('gulp-notify'),
-	concat = 		require('gulp-concat'),
-	sourcemaps = 	require('gulp-sourcemaps'),
-	livereload = 	require('gulp-livereload'),
-	imagemin = 		require('gulp-imagemin'),
-	jpegoptim = 	require('imagemin-jpegoptim'),
-	pngquant = 		require('imagemin-pngquant');
+var gulp =             require('gulp'),
+	uglify =           require('gulp-uglify'),
+	sass =             require('gulp-ruby-sass'),
+	autoprefixer =     require('gulp-autoprefixer'),
+	plumber =          require('gulp-plumber'),
+	notify =           require('gulp-notify'),
+	sourcemaps =       require('gulp-sourcemaps'),
+	livereload =       require('gulp-livereload'),
+	concat = 		   require('gulp-concat'),
+	path = 			   require('path'),
+	folders = 		   require('gulp-folders');
 
-var srcDir = 			'_src',
-	jsSource = 			'scripts',
-	jsDestination = 	'_js',
-	cssSource = 		'styles',
-	cssDestination = 	'_css',
-	imageSource = 		'_src/media',
-	imageDestination = 	'_media';
+var srcDir =           '_src',
+	jsSource =         'scripts',
+	jsDestination =    '_js',
+	cssSource =        'styles',
+	cssDestination =   '_css';
 
 // this is the error shown using plumber and notify:
 var onError = function(err) {
@@ -116,61 +114,43 @@ var onError = function(err) {
 	this.emit('end');
 };
 
-// Uglifies a.k.a. minifies JS
-gulp.task('scripts', function() {
-	gulp.src(srcDir + '/' + jsSource + '/*.js')
+// Uglifies / minifies JS
+gulp.task('scripts', folders(srcDir + "/" + jsSource, function(folder) {
+	return gulp.src( path.join( srcDir + "/" + jsSource, folder, '*.js' ))
+		.pipe(concat(folder + ".js"))
 		.pipe(plumber({errorHandler: onError}))
 		.pipe(uglify())
 		.pipe(gulp.dest(jsDestination))
 		.pipe(livereload()); // run livereload on js changes
-});
+}));
 
 // Styles Task
 gulp.task('styles', function() {
-	return sass (
-		srcDir + '/' + cssSource + '/', {
-			sourcemap: true,
-			noCache: false, 	// default = false. saves ~10% runtime but stores in a .sass-cache folder.
-			style: 'compressed'
-		}
-	)
+	return sass( srcDir + '/' + cssSource + '/', {
+		sourcemap: true,
+		noCache: false,   // default = false. saves ~10% runtime but stores in a .sass-cache folder.
+		style: 'compressed'
+	})
 	.on('error', onError)
-	.pipe(concat('master.css'))
 	.pipe(autoprefixer())
-	.pipe(sourcemaps.write('../' + cssDestination +'/',{ 
-		sourceRoot: srcDir + '/' + cssSource,
-		includeContent: false  // default is true, which includes the entire css in the sourcemap
+	.pipe(sourcemaps.write('./', {
+		sourceRoot: srcDir + '/' + cssSource,  //
+		includeContent: false 		// default is true, which includes the entire css in the sourcemap
 	}))
 	.pipe(gulp.dest(cssDestination));
 });
 
-// Image compression is off by default but is included. You can access by running `gulp images` 
-// or add it to the `default` gulp task at the bottom.
+gulp.task('watch', function() {
+ 	gulp.watch(srcDir + '/' + jsSource + '/**/*.js', ['scripts']);
+ 	gulp.watch(srcDir + '/' + cssSource + '/**/*.scss', ['styles']);
+ 	livereload.listen(); // start the livereload server
+ 	gulp.watch(['**/*.html','**/*.php', '**/*.inc', cssDestination + '/master.css' ], function(event) {
+ 		livereload.changed(event.path); // run livereload on the file
+ 	});
+// 
+ });
 
-gulp.task('images', function() {
-  return gulp.src(imageSource+'/**/*.{png,jpg,jpeg}')
-  	.pipe(jpegoptim({
-  		max: 70
-  	})())
-  	.pipe(pngquant({
-  		quality: 	'65-80',
-  		speed: 		4})())
-    .pipe(gulp.dest(imageDestination));
-});
-
-gulp.task('watch', function () {
-	
-	gulp.watch(srcDir + '/' + jsSource + '/**/*.js', ['scripts']);
-	gulp.watch(srcDir + '/' + cssSource + '/*.scss', ['styles']);
-	livereload.listen();
-	gulp.watch(['**/*.html','**/*.php', cssDestination + '/master.css' ], function(event) {
-		livereload.changed(event.path); 
-	});
-
-});
-
-
-gulp.task('default', ['scripts', 'styles', 'watch']);
+gulp.task('default', [ 'scripts', 'styles', 'watch' ]);
 ```
 ##### The package.json
 ``` javascript
@@ -201,12 +181,13 @@ gulp.task('default', ['scripts', 'styles', 'watch']);
     "gulp-plumber": "^1.0.0",
     "gulp-ruby-sass": "^1.0.1",
     "gulp-sourcemaps": "^1.5.1",
-    "gulp-uglify": "^1.1.0",
-    "gulp-imagemin":"^2.2.1",
-    "imagemin-jpegoptim":"^4.0.0",
-    "imagemin-pngquant" : "^4.0.0"
+    "gulp-uglify": "^1.2.0",
+    "imageoptim-cli":"^1.11.6",
+    "gulp-folders":"^1.1.0",
+    "path":"^0.11.14"
   }
 }
+
 ```
 
 If you're interested in keeping up to date with this project, you can [follow it here](https://github.com/flickerbox/fabric)
