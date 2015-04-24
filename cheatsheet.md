@@ -1,4 +1,5 @@
-## General Dev Cheatsheet
+
+### General Dev Cheatsheet
 
 ##### common settings for `~/.bash_profile`
 ```shell
@@ -197,4 +198,19 @@ Use protocol relative URL's when possible. What this means is not specifying the
 EXCEPT in cases when you're passing in a return url, like a Marketo form.
 ```html
 <input type="hidden" name="returnURL" value="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . '/about/contact-thank-you' ?>">
+```
+
+##### Regular Expressions
+```shell
+##  # Characters Meaning
+$	# End of a line
+^	# Start of a line
+[]	# Character class
+?	# The preceding item is optional and matched at most once
+*	# Zero or more of the preceding item
++	# One or more of the preceding item
+{}	# Match some number of the preceding item
+|	# Alternation (true if either of the regexes it separates match)
+.	# Any one character
+\	# Escape (take the following character literally)
 ```
