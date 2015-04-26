@@ -214,3 +214,12 @@ $	# End of a line
 .	# Any one character
 \	# Escape (take the following character literally)
 ```
+
+##### Awk
+```shell
+awk '{print $1}' <filename>		# prints first column in file
+
+awk '{print $NF}' <filename> 	# prints number of fields in current file
+
+awk '{print NR}' <filename>		# prints row number being processes
+```
