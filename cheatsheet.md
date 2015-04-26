@@ -222,4 +222,32 @@ awk '{print $1}' <filename>		# prints first column in file
 awk '{print $NF}' <filename> 	# prints number of fields in current file
 
 awk '{print NR}' <filename>		# prints row number being processes
+
+awk '{print $1, $2}' <filename> # prints columns 1 and 2 with a space between them
+```
+Since a `space` is the default delimiter for awk, we can specify something else with the `-F` flag like this `awk -F '-' '{print $1}' file.txt`
+
+You can also use awk to extract a specific row from a file with `NR`.
+```shell
+awk 'NR==2' file.txt 	# will print only the second row of the file
+```
+
+You can return lines with a certain length as well with the `length($0)` command.
+```shell
+awk 'length($0) > 30' files.txt # prints only lines with more than 30 chars
+```
+
+To find the average of numbers in a column we can use the `sum` function
+```shell
+awk -F '-' '{sum+=$2} END {print "Average age = ",sum/NR}' students.txt
+```
+In the above example, sum does not have to be declared, but rather it's created on the fly. The `END` function tells awk what to do once the previous command has been ran. In this case, we print the average age of students, or the sum of the second column divided by the number of rows.
+
+In addition to the `END` pattern, awk also has a `BEGIN` pattern which describes an action that needs to be taken before a single line in the file path is processed.
+```shell
+awk 'BEGIN {print "This is the second line of the file"} NR==2' students.txt
+
+### OUTPUT
+This is the second line of the file
+Jack Smith - 26 - jack@example.com
 ```
