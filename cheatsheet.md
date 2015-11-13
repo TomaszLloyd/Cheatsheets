@@ -36,6 +36,12 @@ alias gcm="git commit -m"
 autocmd Filetype gitcommit setlocal spell textwidth=72
 ```
 
+## Sass
+If Gulp/Grunt isn't available and using straight Sass/Compass
+```shell
+sass --watch --compass -t compressed .
+```
+
 ## .gitignore
 
 + for WordPress specific sites `wp-content/uploads/`
