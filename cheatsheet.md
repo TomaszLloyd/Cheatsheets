@@ -116,6 +116,7 @@ Thumbs.db
 + send packets to ip and troubleshoot connectivity problems `ping 192.168.118.1`
 + troubleshoot connection problems, see where packets go `traceroute yahoo.com` if traceroute fails on certain hops but continues going, the individual server may not support icmp protocol, which is used by ping and traceroute
 + Traceroute with stats over time `mtr google.com`
++ Get listing of directory sizes `du -sh *`
 
 ##### Using Zgrep
 ```shell
