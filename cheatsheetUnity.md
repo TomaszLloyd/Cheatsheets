@@ -22,4 +22,4 @@ public void SomeFunction() {
 	some_function();
 #endif
 ```
-In the above, the `some_function();` code only exists when in the Unity Editor and will not exist whatsoever on runtime or when you compile.
+In the above, the `some_function();` code only exists when in the Unity Editor and will not exist whatsoever on runtime or when you compile. See [Unity Documentation here](https://docs.unity3d.com/Manual/PlatformDependentCompilation.html)
