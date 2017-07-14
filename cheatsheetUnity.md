@@ -1,9 +1,30 @@
-### Unity and C# Cheatsheet
-The following are useful code snippets, design patterns, and best practices that I've found are handy to reference while developing for Unity3D. Your mileage may vary.
+## Unity and C# Cheatsheet
+The following are useful code snippets, design patterns, naming conventions, and best practices that I've found are handy to reference while developing for Unity3D. Your mileage may vary.
 
-#### Editor
+### Naming Conventions
 
-##### Add a custom Event Handler in Inspector.
+Public vs Private Variables:
++ public variables are camelCase
++ public methods are PascalCase
++ private variables and methods have an underscore prefix
+
+```c#
+public bool camelCase;
+
+private bool _camelCase;
+
+public void PascalCase();
+
+private void _PascalCase();
+
+public struct PascalCase(){
+	public float someFloat;
+}
+```
+
+### Editor
+
+#### Add a custom Event Handler in Inspector.
 ```c#
 using UnityEngine.Events;
 
@@ -15,7 +36,7 @@ public void SomeFunction() {
 ```
 [Unity Documentation](https://docs.unity3d.com/Manual/UnityEvents.html)
 
-##### Platform Dependent Compilation
+#### Platform Dependent Compilation
 + preprocessor directives that let you partition your scripts to compile and execute a section of code exclusively for one of the supported platforms
 
 ```c#
