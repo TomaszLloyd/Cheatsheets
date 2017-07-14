@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 public UnityEvent customEvent;
 
-public void Foo() {
+public void SomeFunction() {
 	customEvent.Invoke();
 }
 ```
