@@ -87,7 +87,7 @@ Thumbs.db
 ```
 ***
 
-### Sys Admin
+### Dev Ops / Sys Admin
 
 + Bulk rename files `for f in *; do mv "$f" "_prepend_$f"; done` will add `_prepend_` to every file name. Bonus: change the line to `do echo mv` to do a dry run before executing the command.
 + Run last command as sudo `sudo !!`
