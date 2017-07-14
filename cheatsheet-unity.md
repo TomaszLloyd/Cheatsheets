@@ -1,9 +1,9 @@
 ### Unity Cheatsheet
 
-##### Editor
+#### Editor
 
-+ Add a custom Event Handler in Inspector.
-```
+##### Add a custom Event Handler in Inspector.
+```c#
 using UnityEngine.Events;
 
 public UnityEvent customEvent;
