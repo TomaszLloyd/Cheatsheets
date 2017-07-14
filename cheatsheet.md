@@ -119,6 +119,9 @@ Thumbs.db
 + Traceroute with stats over time `mtr google.com`
 + Get listing of directory sizes `du -sh *`
 
+##### Cron best practices
++ Make a bash script to call any third party services, such as `letsencrypt`, and call the bash script from `cron`, not the service directly. `cron` may have a slightly different `$PATH` context so what works when manually running command line scripts might fail when run from the `cron` environment.
+
 ##### Using Zgrep
 ```shell
 
