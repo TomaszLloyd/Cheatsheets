@@ -15,7 +15,7 @@ public void SomeFunction() {
 ```
 [Unity Documentation](https://docs.unity3d.com/Manual/UnityEvents.html)
 
-#### Platform Dependent Compilation
+##### Platform Dependent Compilation
 + preprocessor directives that let you partition your scripts to compile and execute a section of code exclusively for one of the supported platforms
 
 ```c#
