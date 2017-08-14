@@ -52,8 +52,8 @@ Bloom's Taxonomy
 
 Top-to-bottom:
 ```
-	 / Evaluation \
-	/   Synthesis  \
+     / Evaluation \
+    /   Synthesis  \
    /    Analysis    \
   /   Application    \
  /   Comprehension    \
@@ -107,8 +107,9 @@ To approach universities:
 + No prior Unity programming knowledge required
 
 Directional phrasing:
+
 Component | Direcitonal Phrases
---- | --- 
+--- | --- | --- | ---
 Lecture	| We | Us | Let's All
 Demonstration |	I | Me | The instructor
 Activity | You | Everyone else | You are / you all
