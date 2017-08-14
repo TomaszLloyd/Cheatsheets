@@ -45,3 +45,12 @@ public void SomeFunction() {
 #endif
 ```
 In the above, the `some_function();` code only exists when in the Unity Editor and will not exist whatsoever on runtime or when you compile. See [Unity Documentation here](https://docs.unity3d.com/Manual/PlatformDependentCompilation.html)
+
+### Performance Tips
+
+Various tips for more performant Unity and C# code
++ Multiplication is a less intensive function than division.
++ Bitwise register shifting is much faster than multiplication for integers (not applicable to C#/Unity unfortunately)
+
+### Mesh Generation
++ Instead of setting normals, for 99% of applications it's faster to use the `RecalculateNormals()` functions.
