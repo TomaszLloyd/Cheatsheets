@@ -108,8 +108,8 @@ To approach universities:
 
 Directional phrasing:
 
-Component | Direcitonal Phrases
---- | --- | --- | ---
-Lecture	| We | Us | Let's All
-Demonstration |	I | Me | The instructor
-Activity | You | Everyone else | You are / you all
+| Component | Direcitonal Phrases |
+| --- | --- |
+| Lecture	| We | Us | Let's All |
+| Demonstration |	I | Me | The instructor |
+| Activity | You | Everyone else | You are / you all |
