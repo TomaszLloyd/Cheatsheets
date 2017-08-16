@@ -113,3 +113,45 @@ Directional phrasing:
 | Lecture	| We | Us | Let's All |
 | Demonstration |	I | Me | The instructor |
 | Activity | You | Everyone else | You are / you all |
+
+Conclusion
+
+1. Art of asking questions
+2. What is next? Scale your reach!
+
+Activity 02:
++ Learning cycle demonstration and evaluation
++ Volunteers from the class will demonstrate a brief Learning Cycle for critique and evaluation
+
+Key points:
+1. Are sections defined and separate?
+2. Is the objective stated and met?
+
+```
+1. Using anchor and position to create a UI titlebar that scales with device
+```
+
+tinyurl.com/2dbootcamp
+
+
+### Contact Info
+
+Arturo Núńez
+arturo@unity3d.com
+
+Adam Crespi
+Digital Content Production Manager
+adamc@unity3d.com
+
+Carl Callewaert
+Director of Global Evangelism
+carl@unity3d.com
+
+Jessica Lindl
+Global Head of Education
+jessical@unity3d.com
+
+David Della Rocca
+Senior Manager Education
+daviddr@unity3d.com
+
