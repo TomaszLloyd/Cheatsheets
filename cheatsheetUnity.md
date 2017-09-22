@@ -79,6 +79,22 @@ catch (Exception ex )
 ```
 The `throw;` keyword means preserve the exception information and throw it up the call stack.
 
+#### Scale:
+The only game objects that should have a scale are the root or a leaf.
+```
+
+Root // ok to scale
+ |_ First Child // do not scale!
+   |_ First Grandchild (Leaf) // ok to scale
+   |_ Second Grandchild  // do not scale!
+   |  |_ Leaf  // ok to scale
+   |
+   |_ Third Grandchild  // do not scale!
+     |_ Leaf  // ok to scale
+     |_ Leaf  // ok to scale
+
+```
+
 ### Namespaces
 
 Nested namespaces
