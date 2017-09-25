@@ -79,6 +79,19 @@ catch (Exception ex )
 ```
 The `throw;` keyword means preserve the exception information and throw it up the call stack.
 
+To traverse only direct child gameobjects, you can take advantage of the `IEnumerator` functionality of the `Transform` component:
+```c#
+public List<GameObject> visibleOnStart;
+
+void Start () {
+
+  foreach (Transform child in transform) {
+    child.gameObject.SetActive ( visibleOnStart.Contains (child.gameObject) ? true : false );
+  }
+
+}
+``` 
+
 #### Scale:
 The only game objects that should have a scale are the root or a leaf.
 ```
