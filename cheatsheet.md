@@ -140,6 +140,33 @@ git show commit -- file.name
 
 ```
 
+For merging branches, the standard workflow is to have at least three branches `master`, `staging` and `feature` where `feature` is a branch with changes on it that you want to implement.
+
+1. Checkout `master` branch by running `git checkout master` 
+2. Get the latest changes with `git pull`
+3. Checkout the `feature` branch with `git checkout feature`
+4. Merge master into your branch `git merge master` and resolve any conflicts if they come up
+5. Test the changes locally
+6. Merge your branch into `staging`
+```shell
+git checkout staging
+git pull
+git merge feature
+```
+7. Push to staging environment and test your revisions
+```shell
+# example
+git push
+git push production staging
+```
+8. If all goes well, merge your `feature` branch with `master`. Do NOT merge `staging` into `master`.
+```shell
+git checkout master
+git pull
+git merge feature
+git push
+```
+
 ##### Firewalls
 
 (still adding)

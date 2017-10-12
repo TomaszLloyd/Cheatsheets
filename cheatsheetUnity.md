@@ -125,3 +125,22 @@ namespace CodeWorks.MyApplication
 {
     // Do stuff }
 ```
+
+### Saving and Data Persistence
+
+In regards to save frequencey, reading &amp; writing to disk are expensive operations. Consider auto-saving using the `Monobehavior` event listeners `OnApplicationPause` and `OnApplicationQuit` to fire off a save function. Also consider using a background thread or doing a checkpoint based solution.
+
+Consider the following catastrophic events:
+- Out of space
+- Insufficient permissions
+- SD Card removal
+- Data wipe
+- Uninstallation
+- User actions
+
+Consider saving on local device versus cloud saving.
+A custom backend is more flexible but has the following important distinctions:
+- More flexible than Platform Cloud Save
+- AWS knowledge needed
+- Dedicated web developer
+- Not trivial
